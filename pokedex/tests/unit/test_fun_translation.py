@@ -77,8 +77,8 @@ class TestTranslations:
         pokemon_response = PokemonClientFactory.build(is_legendary=True)
         translation_response = TranslationFactory.build()
         pokemon_client_mock.get_pokemon_species.return_value = pokemon_response
-        translation_client_mock.get_yoda_translation.side_effect = TranslationException("Exception occured "
-                                                                                        "while translating")
+        translation_client_mock.get_yoda_translation.side_effect = TranslationException("Exception occurred "
+                                                                                        "while translating.")
 
         app.container.pokemon_client.override(pokemon_client_mock)
         app.container.fun_trans_client.override(translation_client_mock)

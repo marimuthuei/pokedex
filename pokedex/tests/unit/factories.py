@@ -1,3 +1,6 @@
+"""
+This module provides fake data for the client responses.
+"""
 from random import choice
 
 from pydantic_factories import ModelFactory, Use

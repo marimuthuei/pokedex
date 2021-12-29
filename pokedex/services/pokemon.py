@@ -27,11 +27,6 @@ class PokemonService(IPokemonService):
         return pokemon_summary
 
     async def translate(self, name: str) -> PokemonSummary:
-        """
-
-        :param name:
-        :return:
-        """
         result = await self.get_pokemon(name)
         # If no flavour text entries is in english language then written the return the response
         if not result.description:
