@@ -1,3 +1,4 @@
+import logging
 from typing import List, Union
 
 from pydantic import AnyHttpUrl, BaseSettings, validator
@@ -6,7 +7,11 @@ from pydantic import AnyHttpUrl, BaseSettings, validator
 class Settings(BaseSettings):
     api_v1_str = "/api/v1"
     project_name: str
+    pokemon_url: AnyHttpUrl
+    translation_url: AnyHttpUrl
     cors_origins: List[AnyHttpUrl] = []
+    log_level = logging.DEBUG
+    client_timeout: int = 60  # in seconds
 
     @validator("cors_origins", pre=True)
     def validate_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
