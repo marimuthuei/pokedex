@@ -1,4 +1,5 @@
 """Services module."""
+import logging
 
 from pokedex.clients import FunTranslationsClient, PokemonClient
 from pokedex.models import PokemonSummary
@@ -26,4 +27,23 @@ class PokemonService(IPokemonService):
         return pokemon_summary
 
     async def translate(self, name: str) -> PokemonSummary:
-        pass
+        """
+
+        :param name:
+        :return:
+        """
+        result = await self.get_pokemon(name)
+        # If no flavour text entries is in english language then written the return the response
+        if not result.description:
+            return result
+
+        try:
+            if result.habitat == "cave" or result.is_legendary:
+                trans_response = await self._fun_trans_client.get_yoda_translation(result.description)
+            else:
+                trans_response = await self._fun_trans_client.get_shakespeare_translation(result.description)
+            result.description = trans_response.contents.translated
+        except Exception as e:
+            logging.error(f"Failed to translate the description - trace {str(e)}")
+
+        return result
