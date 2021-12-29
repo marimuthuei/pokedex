@@ -5,7 +5,7 @@ from pydantic import AnyHttpUrl, BaseSettings, validator
 
 class Settings(BaseSettings):
     api_v1_str = "/api/v1"
-    project_name: str = "pokedex"
+    project_name: str
     cors_origins: List[AnyHttpUrl] = []
 
     @validator("cors_origins", pre=True)
