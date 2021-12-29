@@ -13,12 +13,12 @@ class FunTranslationsClient:
         self.timeout = ClientTimeout(timeout)
 
     async def get_yoda_translation(self, description: str) -> TranslationResponse:
-        url = f"{self.base_url}yoda.json?text={description}"
+        url = f"{self.base_url}{TranslationsEnum.yoda}.json?text={description}"
         response = await self.get_response(url)
         return TranslationResponse(**response)
 
     async def get_shakespeare_translation(self, description: str) -> TranslationResponse:
-        url = f"{self.base_url}shakespeare.json?text={description}"
+        url = f"{self.base_url}{TranslationsEnum.shakespeare}.json?text={description}"
         response = await self.get_response(url)
         return TranslationResponse(**response)
 
