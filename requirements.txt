@@ -1,3 +1,4 @@
+dependency-injector==4.37.0
 fastapi==0.70.1
 uvicorn==0.16.0
 aiohttp==3.8.1
