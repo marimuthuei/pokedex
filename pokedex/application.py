@@ -10,8 +10,6 @@ from pokedex.containers import Container
 from pokedex.core.config import settings
 from pokedex.error_handlers import register_error_handlers
 
-__author__ = "Marimuthu E"
-
 
 def get_application() -> FastAPI:
     container = Container()
