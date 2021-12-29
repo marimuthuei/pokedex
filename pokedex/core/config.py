@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     translation_url: AnyHttpUrl
     cors_origins: List[AnyHttpUrl] = []
     log_level = logging.DEBUG
-    client_timeout: int = 60  # in seconds
+    client_timeout: int = 30  # in seconds
 
     @validator("cors_origins", pre=True)
     def validate_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
