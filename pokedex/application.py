@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pokedex.api.v1.router import api_router
 from pokedex.containers import Container
 from pokedex.core.config import settings
+from pokedex.error_handlers import register_error_handlers
 
 __author__ = "Marimuthu E"
 
@@ -25,7 +26,9 @@ def get_application() -> FastAPI:
         allow_headers=["*"],
     )
     app.include_router(api_router, prefix=settings.api_v1_str)
+    register_error_handlers(app)
     return app
 
 
 app = get_application()
+
