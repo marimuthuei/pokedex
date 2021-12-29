@@ -4,7 +4,7 @@ Application module - it is startup module to create the app
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from pokedex.api.v1.router import api_router
 from pokedex.core.config import settings
 
 __author__ = "Marimuthu E"
@@ -20,6 +20,7 @@ def get_application() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    app.include_router(api_router, prefix=settings.api_v1_str)
     return app
 
 
