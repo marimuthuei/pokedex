@@ -15,6 +15,8 @@ from pokedex.exceptions import (DomainException, NotFoundError,
                                 TranslationException)
 from pokedex.models import Response
 
+logger = logging.getLogger("uvicorn")
+
 
 def json_error_formatter(error, status_code):
     """
@@ -23,13 +25,13 @@ def json_error_formatter(error, status_code):
     :param status_code: int
     :return: Json response
     """
-    
+
     if issubclass(type(error), RequestValidationError):
         error_msg = error.errors()
     else:
         error_msg = str(error) or error.detail
 
-    logging.error(error_msg)
+    logger.error(error_msg)
     response = {"code": error.code or status_code, "detail": error_msg}
     error_msg = Response(error=response).dict()
     return JSONResponse(status_code=status_code, content=error_msg)
