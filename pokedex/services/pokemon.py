@@ -5,6 +5,8 @@ from pokedex.clients import FunTranslationsClient, PokemonClient
 from pokedex.models import HabitatEnum, LanguageEnum, PokemonSummary
 from pokedex.services.interfaces.ipokemon import IPokemonService
 
+logger = logging.getLogger("uvicorn")
+
 
 class PokemonService(IPokemonService):
 
@@ -41,6 +43,6 @@ class PokemonService(IPokemonService):
                 trans_response = await self._fun_trans_client.get_shakespeare_translation(description)
             result.description = trans_response.contents.translated
         except Exception as e:
-            logging.error(f"Failed to translate the description - trace {str(e)}")
+            logger.error(f"Failed to translate the description - trace {str(e)}")
 
         return result

@@ -8,12 +8,13 @@ from pokedex.models import PokemonSummary, Response
 from pokedex.services.pokemon import PokemonService
 
 router = APIRouter()
+logger = logging.getLogger("uvicorn")
 
 
 @router.get("/{name}", status_code=200, response_model=Response[PokemonSummary])
 @inject
 async def get_pokemon_summary(name: str, pokemon_service: PokemonService = Depends(Provide[Container.pokemon_service])):
-    logging.info(f"Getting pokemon basic information for the name - {name}")
+    logger.info(f"Getting pokemon basic information for the name - {name}")
     result = await pokemon_service.get_pokemon(name)
     return Response[PokemonSummary](data=result)
 
@@ -21,6 +22,6 @@ async def get_pokemon_summary(name: str, pokemon_service: PokemonService = Depen
 @router.get("/transalted/{name}", status_code=200, response_model=Response[PokemonSummary])
 @inject
 async def get_fun_translation(name: str, pokemon_service: PokemonService = Depends(Provide[Container.pokemon_service])):
-    logging.info(f"Translate pokemon description for the pokemon - {name}")
+    logger.info(f"Translate pokemon description for the pokemon - {name}")
     result = await pokemon_service.translate(name)
     return Response[PokemonSummary](data=result)
