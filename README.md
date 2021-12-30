@@ -35,6 +35,14 @@ Install the below requirements
     ```
 Once the application is started. Please open the url http://localhost:8000/docs
  for API information and execution.
+ 
+### Logs
+
+To show service logs run the following command
+
+```bash
+docker-compose logs --tail=100 app
+```
 
 ### Tests
 The application uses pytest as a test runner. Run the below command.
