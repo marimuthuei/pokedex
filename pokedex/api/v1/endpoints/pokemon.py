@@ -1,3 +1,5 @@
+import logging
+
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 
@@ -11,6 +13,7 @@ router = APIRouter()
 @router.get("/{name}", status_code=200, response_model=Response[PokemonSummary])
 @inject
 async def get_pokemon_summary(name: str, pokemon_service: PokemonService = Depends(Provide[Container.pokemon_service])):
+    logging.info(f"Getting pokemon basic information for the name - {name}")
     result = await pokemon_service.get_pokemon(name)
     return Response[PokemonSummary](data=result)
 
@@ -18,5 +21,6 @@ async def get_pokemon_summary(name: str, pokemon_service: PokemonService = Depen
 @router.get("/transalted/{name}", status_code=200, response_model=Response[PokemonSummary])
 @inject
 async def get_fun_translation(name: str, pokemon_service: PokemonService = Depends(Provide[Container.pokemon_service])):
+    logging.info(f"Translate pokemon description for the pokemon - {name}")
     result = await pokemon_service.translate(name)
     return Response[PokemonSummary](data=result)

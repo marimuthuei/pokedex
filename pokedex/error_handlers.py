@@ -3,40 +3,39 @@ This module registers custom error handlers and formats error response based on
 common error format.
 """
 
+import logging
+
 from aiohttp.client_exceptions import ClientResponseError
 from fastapi import Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from pokedex.exceptions import DomainException, NotFoundError, TranslationException
+from pokedex.exceptions import (DomainException, NotFoundError,
+                                TranslationException)
 from pokedex.models import Response
 
 
 def json_error_formatter(error, status_code):
     """
-
-    :param error:
-    :param status_code:
-    :return:
+    The function formats the error type to common error response format.
+    :param error: exception
+    :param status_code: int
+    :return: Json response
     """
+    
     if issubclass(type(error), RequestValidationError):
         error_msg = error.errors()
     else:
         error_msg = str(error) or error.detail
 
+    logging.error(error_msg)
     response = {"code": error.code or status_code, "detail": error_msg}
     error_msg = Response(error=response).dict()
     return JSONResponse(status_code=status_code, content=error_msg)
 
 
 def register_error_handlers(app):
-    """
-
-    :param app:
-    :return:
-    """
-
     @app.exception_handler(DomainException)
     async def handle_domain_exception(request: Request, exc: DomainException):
         mapper = [
