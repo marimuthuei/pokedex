@@ -17,6 +17,9 @@ Install the below requirements
 
 ### Running the application
 - Clone the repository to the working directory.
+    ```bash
+    git clone https://github.com/marimuthuei/pokedex.git
+    ```
 
 - Navigate to the project directory
      ```bash
@@ -102,9 +105,9 @@ TOTAL                                              382     40    90%
 
 These improvements depends on the specific uses cases, in general we might need for good application. 
 
-- Separate application settings for dev, test and prod. Create a base settings class and inherit for different envs.
+- Separate application settings for dev, test and prod. Create a base settings class and inherit for different envs
   and create a settings instance based on env.
-- Separate requirements for production and dev as dev have some extra packages for testing. This can be implemented having 
+- Separate requirements for production and dev since dev have some extra packages for testing. This can be implemented having 
   different docker-compose files for test.
 - Add log handlers and more log collection statements.
 - Add caching to improve the latency and to avoid remote calls.
